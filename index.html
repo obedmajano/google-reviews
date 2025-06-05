@@ -2,37 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Leave a Review</title>
-  <script>
-    function handleSubmit() {
-      const rating = parseInt(document.querySelector('input[name="stars"]:checked')?.value);
-
-      if (!rating) {
-        alert("Please select a rating.");
-        return;
-      }
-
-      if (rating >= 4) {
-        // Redirect to Google review page
-        window.location.href = "https://your-google-review-link.com";
-      } else {
-        // Redirect to internal feedback form
-        window.location.href = "https://your-feedback-form-link.com";
-      }
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Review Redirect</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 40px;
     }
-  </script>
+
+    .logo {
+      width: 100px;
+      margin: 0 auto 20px;
+    }
+
+    .review-text {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0074a2;
+      margin-bottom: 20px;
+    }
+
+    .stars {
+      display: inline-flex;
+      font-size: 40px;
+      cursor: pointer;
+    }
+
+    .star {
+      color: #ccc;
+      transition: color 0.3s;
+    }
+
+    .star.hovered,
+    .star.selected {
+      color: gold;
+    }
+  </style>
 </head>
 <body>
-  <h2>How was your experience?</h2>
 
-  <form onsubmit="event.preventDefault(); handleSubmit();">
-    <label><input type="radio" name="stars" value="5"> ⭐⭐⭐⭐⭐</label><br>
-    <label><input type="radio" name="stars" value="4"> ⭐⭐⭐⭐</label><br>
-    <label><input type="radio" name="stars" value="3"> ⭐⭐⭐</label><br>
-    <label><input type="radio" name="stars" value="2"> ⭐⭐</label><br>
-    <label><input type="radio" name="stars" value="1"> ⭐</label><br><br>
+  <img class="logo" src="https://i.imgur.com/Wp2zX9F.png" alt="Company Logo">
+  <hr style="margin: 20px auto; width: 80%;">
 
-    <button type="submit">Submit Review</button>
-  </form>
+  <div class="review-text">You have a new review</div>
+
+  <div class="stars" id="starContainer">
+    <span class="star" data-value="1">&#9733;</span>
+    <span class="star" data-value="2">&#9733;</span>
+    <span class="star" data-value="3">&#9733;</span>
+    <span class="star" data-value="4">&#9733;</span>
+    <span class="star" data-value="5">&#9733;</span>
+  </div>
+
+  <script>
+    const stars = document.querySelectorAll(".star");
+    const starContainer = document.getElementById("starContainer");
+
+    stars.forEach(star => {
+      star.addEventListener("mouseover", () => {
+        const val = parseInt(star.dataset.value);
+        stars.forEach(s => s.classList.remove("hovered"));
+        for (let i = 0; i < val; i++) {
+          stars[i].classList.add("hovered");
+        }
+      });
+
+      star.addEventListener("mouseout", () => {
+        stars.forEach(s => s.classList.remove("hovered"));
+      });
+
+      star.addEventListener("click", () => {
+        const rating = parseInt(star.dataset.value);
+        stars.forEach(s => s.classList.remove("selected"));
+        for (let i = 0; i < rating; i++) {
+          stars[i].classList.add("selected");
+        }
+
+        // Redirect based on rating
+        if (rating >= 4) {
+          window.location.href = "https://g.page/YOUR_GOOGLE_REVIEW_LINK";
+        } else {
+          window.location.href = "https://yourdomain.com/more-info";
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
