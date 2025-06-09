@@ -99,6 +99,8 @@
   </div>
   <script>
     const stars = document.querySelectorAll(".star");
+    const high = urlParams.get("high");
+    const low = urlParams.get("low");
 
     stars.forEach(star => {
       star.addEventListener("mouseover", () => {
@@ -122,9 +124,9 @@
 
         // Conditional redirect
         if (rating >= 4) {
-          window.location.href = "#reviewslink";
+          window.location.href = high;
         } else {
-          window.location.href = "#MoreInfoURL";
+          window.location.href = low;
         }
       });
     });
